@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/Rx';
+
 import { Candidate } from "../candidate/candidate";
 
 @Component({
@@ -6,14 +10,24 @@ import { Candidate } from "../candidate/candidate";
   templateUrl: './candidate-list.component.html',
   styleUrls: ['./candidate-list.component.scss']
 })
-export class CandidateListComponent {
-  candidates: Candidate[];
+export class CandidateListComponent implements OnInit {
+  candidates: Observable<Candidate[]>;
 
-  constructor() {
-    this.candidates = [
-      new Candidate('Elon Musk', 'Space X - Tesla, Inc. - Neuralink', 46,  'https://ei.marketwatch.com/Multimedia/2017/05/24/Photos/ZH/MW-FN186_musk_0_20170524133537_ZH.jpg?uuid=665eca18-40a7-11e7-a789-9c8e992d421e'),
-      new Candidate('Leia Organa', 'Rebel Alliance', 60, 'http://media.comicbook.com/2017/06/carrie-fisher-official-cause-death-autopsy-1003206.jpg'),
-      new Candidate('Doctor Emmett Lathrop "Doc" Brown', 'DeLorean Time Machine, Inc.', 100, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8_9M6UYIFHrNCGPe0Ixp312uaa_nFFT4qKgVRVv7jn37VmJjc')
-    ];
+  constructor(private db: AngularFireDatabase) {}
+
+  ngOnInit() {
+    this.candidates = this.getCandidates('/candidates');
+  }
+
+  getCandidates(path: string): Observable<Candidate[]> {
+    return this.db.list<any>(path).valueChanges()
+      .map(changes => changes
+        .map(c => new Candidate(
+          c.name,
+          c.party,
+          c.age,
+          c.photoURL
+        ))
+      );
   }
 }

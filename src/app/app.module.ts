@@ -1,20 +1,33 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { AppComponent } from './app.component';
-import { CandidateComponent } from './components/candidate/candidate.component';
-import { CandidateListComponent } from './components/candidate-list/candidate-list.component';
-import { HeaderComponent } from './layout/header/header.component';
+
+import { environment } from './../environments/environment';
+
+// Components
+import { ComponentsModule } from './components';
+// Layout
+import { LayoutModule } from './layout';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    CandidateComponent,
-    CandidateListComponent,
-    HeaderComponent
+    AppComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    ComponentsModule,
+    LayoutModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
+    NgbModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
