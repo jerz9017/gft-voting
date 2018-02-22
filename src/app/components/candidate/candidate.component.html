@@ -4,7 +4,7 @@
     <h5 class="card-title">{{data.name}}</h5>
     <h6 class="card-subtitle mb-2 text-muted">{{data.age}} years</h6>
     <p class="card-text">{{data.party}}</p>
-    <div class="card-block p-2" *ngIf="!user.voted">
+    <div class="card-block p-2">
       <a href="#" class="card-link" (click)="isCollapsed = !isCollapsed">Show more...</a>
       <ul class="card-text" [ngbCollapse]="isCollapsed">
         <li class="text-left" *ngFor="let p of data.proposals">{{p.desc}}</li>
@@ -12,7 +12,7 @@
     </div>
     <div class="card-block">
       <button class="btn btn-primary" (click)="voteCandidate(data.id)" [disabled]="state.isBusy | async" *ngIf="!user.voted">Vote</button>
-      <p class="text-info mt-2" *ngIf="!user.voted && state.isBusy | async">Processing your vote!</p>
+      <p class="text-info mt-2" *ngIf="state.isBusy | async">Processing your vote!</p>
       <ngb-alert *ngIf="user.voted" [dismissible]="false" [type]="'success'">You have already voted!</ngb-alert>
     </div>
   </div>
