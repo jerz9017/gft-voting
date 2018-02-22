@@ -7,7 +7,6 @@ export class MailService {
 
   send(email: string) {
     const url = `https://us-central1-gft-voting.cloudfunctions.net/sendEmail?email=${email}`;
-
     return this.http.post(url, null);
   }
 }

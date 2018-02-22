@@ -19,7 +19,10 @@ export class AuthService {
   // TODO: I don't like this, enhance it!
   currentUser: User;
 
-  constructor(private afAuth: AngularFireAuth, private afs: AngularFirestore) {
+  constructor(
+    private afAuth: AngularFireAuth,
+    private afs: AngularFirestore
+  ) {
     this.user = this.afAuth.authState
       .switchMap(user => {
         this.currentUser = user;

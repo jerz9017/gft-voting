@@ -5,7 +5,8 @@ import 'rxjs/operators/map';
 
 import { Candidate } from "../candidate/candidate";
 import { AuthService } from '../../shared/services/auth.service';
-import {MailService} from "../../shared/services/mail.service";
+import { MailService } from "../../shared/services/mail.service";
+import { StateService } from "../../shared/services/state.service";
 
 interface Vote {
   candidate: string;
@@ -19,9 +20,14 @@ interface Vote {
 })
 export class CandidateListComponent implements OnInit {
   private candidatesCollection: AngularFirestoreCollection<Candidate>;
-  public candidates: Observable<Candidate[]>;
+  candidates: Observable<Candidate[]>;
 
-  constructor(private afs: AngularFirestore, private auth: AuthService, private mail: MailService) {}
+  constructor(
+    private afs: AngularFirestore,
+    private auth: AuthService,
+    private mail: MailService,
+    private state: StateService
+  ) {}
 
   ngOnInit() {
     this.candidatesCollection = this.afs.collection<Candidate>('candidates', ref => {
@@ -46,8 +52,22 @@ export class CandidateListComponent implements OnInit {
     const votesCollection = this.afs.collection<Vote>('votes');
     const {uid, email} = this.auth.currentUser;
 
+    this.state.isBusy.next(true);
+
     votesCollection.add({candidate, user: uid})
-      .then(() => this.mail.send(email))
-      .catch(err => console.log(err));
+      .then(() => {
+        this.mail.send(email).toPromise()
+          .then(data => {
+            this.state.isBusy.next(false);
+          })
+          .catch(err => {
+            this.state.isBusy.next(false);
+            console.log(err);
+          });
+      })
+      .catch(err => {
+        this.state.isBusy.next(false);
+        console.log(err);
+      });
   }
 }
