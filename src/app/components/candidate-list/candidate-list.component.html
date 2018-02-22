@@ -1,5 +1,9 @@
-<div class="row no-gutters">
+<div class="row">
   <div class="card-group">
-    <candidate *ngFor="let c of candidates | async" [data]="c"></candidate>
+    <candidate
+      class="candidate"
+      *ngFor="let candidate of candidates | async"
+      [data]="candidate"
+      (candidateVoted)="voteCandidate($event)"></candidate>
   </div>
 </div>

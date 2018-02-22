@@ -2,14 +2,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { environment } from './../environments/environment';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
-
-import { environment } from './../environments/environment';
 
 // Components
 import { ComponentsModule } from './components';
@@ -17,19 +16,16 @@ import { ComponentsModule } from './components';
 import { LayoutModule } from './layout';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
   imports: [
     BrowserModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    AngularFireAuthModule,
+    NgbModule.forRoot(),
     ComponentsModule,
     LayoutModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFireDatabaseModule,
-    AngularFireAuthModule,
-    NgbModule.forRoot()
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  declarations: [ AppComponent ],
+  bootstrap: [ AppComponent ]
 })
-export class AppModule { }
+export class AppModule {}

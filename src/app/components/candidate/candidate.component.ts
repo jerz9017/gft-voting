@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import {Candidate} from "./candidate";
 
 @Component({
@@ -8,4 +8,9 @@ import {Candidate} from "./candidate";
 })
 export class CandidateComponent {
   @Input('data') data: Candidate;
+  @Output() candidateVoted = new EventEmitter<string>();
+
+  voteCandidate(id: string) {
+    this.candidateVoted.emit(id);
+  }
 }

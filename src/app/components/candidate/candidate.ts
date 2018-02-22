@@ -1,4 +1,5 @@
 export class Candidate {
+  id: string;
   name: string;
   party: string;
   age: number;
@@ -10,7 +11,8 @@ export class Candidate {
     {desc: 'Bla3'}
   ];
 
-  constructor(name: string, party: string, age: number, photoUrl: string) {
+  constructor(id: string, name: string, party: string, age: number, photoUrl: string) {
+    this.id = id;
     this.name = name;
     this.party = party;
     this.age = age;
