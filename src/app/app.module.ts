@@ -14,6 +14,8 @@ import { AppComponent } from './app.component';
 import { ComponentsModule } from './components';
 // Layout
 import { LayoutModule } from './layout';
+// Shared
+import { SharedModule } from './shared';
 
 @NgModule({
   imports: [
@@ -24,6 +26,7 @@ import { LayoutModule } from './layout';
     NgbModule.forRoot(),
     ComponentsModule,
     LayoutModule,
+    SharedModule
   ],
   declarations: [ AppComponent ],
   bootstrap: [ AppComponent ]
