@@ -10,7 +10,7 @@ interface User {
   email: string;
   photoURL?: string;
   displayName?: string;
-  hasVoted?: boolean;
+  voted?: boolean;
 }
 
 @Injectable()
@@ -40,9 +40,8 @@ export class AuthService {
 
   private authLogin(provider) {
     return this.afAuth.auth.signInWithPopup(provider)
-      .then(({user}) => {
-        this.updateUser(user);
-      });
+      .then(({user}) => this.updateUser(user))
+      .catch(err => console.log(err));
   }
 
   private updateUser(user) {

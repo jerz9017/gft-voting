@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
 import 'rxjs/operators/map';
 
 import { Candidate } from "../candidate/candidate";
 import { AuthService } from '../../shared/services/auth.service';
+import {MailService} from "../../shared/services/mail.service";
 
 interface Vote {
   candidate: string;
@@ -19,9 +19,9 @@ interface Vote {
 })
 export class CandidateListComponent implements OnInit {
   private candidatesCollection: AngularFirestoreCollection<Candidate>;
-  candidates: Observable<Candidate[]>;
+  public candidates: Observable<Candidate[]>;
 
-  constructor(private afs: AngularFirestore, private auth: AuthService) {}
+  constructor(private afs: AngularFirestore, private auth: AuthService, private mail: MailService) {}
 
   ngOnInit() {
     this.candidatesCollection = this.afs.collection<Candidate>('candidates', ref => {
@@ -47,7 +47,12 @@ export class CandidateListComponent implements OnInit {
       const votesCollection = this.afs.collection<Vote>('votes');
 
       votesCollection.add({candidate, user: uid})
-        .then(() => console.log('Vote Emitted!!!'))
+        .then(() => {
+          this.mail.send('jerz9017@gmail.com').subscribe(
+            data => console.log(data),
+            err => console.log(err)
+          );
+        })
         .catch(err => console.log(err));
     });
   }

@@ -10,6 +10,7 @@
         <li class="text-left" *ngFor="let p of data.proposals">{{p.desc}}</li>
       </ul>
     </div>
-    <button class="btn btn-primary" (click)="voteCandidate(data.id)">Vote</button>
+    <button class="btn btn-primary" (click)="voteCandidate(data.id)" [disabled]="!voteEnabled">Vote</button>
+    <p class="mt-2" *ngIf="!voteEnabled">You have already voted!</p>
   </div>
 </div>
