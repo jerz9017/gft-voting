@@ -1,9 +1,8 @@
-<div class="row">
-  <div class="card-group">
-    <candidate
-      class="candidate"
-      *ngFor="let candidate of candidates | async"
-      [data]="candidate"
-      (candidateVoted)="voteCandidate($event)"></candidate>
-  </div>
+<div class="card-group justify-content-around">
+  <candidate
+    class="mb-2"
+    *ngFor="let candidate of candidates | async"
+    [data]="candidate"
+    (candidateVoted)="voteCandidate($event)">
+  </candidate>
 </div>
