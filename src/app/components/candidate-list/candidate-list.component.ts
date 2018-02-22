@@ -43,17 +43,11 @@ export class CandidateListComponent implements OnInit {
   }
 
   voteCandidate(candidate: string) {
-    this.auth.user.subscribe(({uid}) => {
-      const votesCollection = this.afs.collection<Vote>('votes');
+    const votesCollection = this.afs.collection<Vote>('votes');
+    const {uid, email} = this.auth.currentUser;
 
-      votesCollection.add({candidate, user: uid})
-        .then(() => {
-          this.mail.send('jerz9017@gmail.com').subscribe(
-            data => console.log(data),
-            err => console.log(err)
-          );
-        })
-        .catch(err => console.log(err));
-    });
+    votesCollection.add({candidate, user: uid})
+      .then(() => this.mail.send(email))
+      .catch(err => console.log(err));
   }
 }
