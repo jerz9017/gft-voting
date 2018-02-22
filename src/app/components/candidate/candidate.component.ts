@@ -12,6 +12,8 @@ export class CandidateComponent {
   @Input('data') data: Candidate;
   @Output() candidateVoted = new EventEmitter<string>();
 
+  isCollapsed: boolean = true;
+
   constructor(
     public auth: AuthService,
     public state: StateService

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { CandidateComponent } from './candidate/candidate.component';
 import { CandidateListComponent } from './candidate-list/candidate-list.component';
@@ -7,7 +8,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    NgbModule
   ],
   declarations: [
     CandidateComponent,

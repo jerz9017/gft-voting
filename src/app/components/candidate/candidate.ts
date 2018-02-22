@@ -18,8 +18,4 @@ export class Candidate {
     this.age = age;
     this.photoUrl = photoUrl;
   }
-
-  toggle() {
-    this.hide = !this.hide;
-  }
 }
