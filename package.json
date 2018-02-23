@@ -1,6 +1,7 @@
 {
   "name": "gft-voting",
   "version": "0.0.0",
+  "description": "Firebase based demo application to show the Serverless approach.",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
